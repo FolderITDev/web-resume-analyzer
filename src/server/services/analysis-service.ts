@@ -1,31 +1,41 @@
 import { z } from 'zod';
 
-import { analyzeResume, ENGINE_VERSION } from '@/domain/analysis/analyze';
 import {
   ACCEPTED_UPLOAD,
   type Analysis,
   type AnalysisList,
-  type AnalysisStage,
   AnalyzeFieldsSchema,
   type FileType,
   type ListAnalysesQuery,
   MAX_UPLOAD_BYTES,
 } from '@/lib/validation/analysis';
 
+import {
+  type AnalysisEngine,
+  AnalysisEngineError,
+  type EngineJob,
+  type EngineSubmission,
+  type RunningEngineJob,
+  type SettledEngineJob,
+} from '../analysis-engine/client';
 import { type AnalysisRow } from '../db/schema';
 import {
-  ExtractionError,
   ForbiddenError,
   NotFoundError,
   PayloadTooLargeError,
   UnsupportedFileError,
   ValidationError,
 } from '../errors';
-import { extractText, sniffFileType } from '../extraction';
 import { type AnalysisRepository } from '../repositories/analysis-repository';
+import { sniffFileType } from '../uploads/file-type';
 
 const VISITOR_RETENTION_MS = 24 * 60 * 60 * 1000;
 const STALE_JOB_MS = 5 * 60 * 1000;
+/** How long the engine has to finish a job before the analysis is marked as failed. */
+const ENGINE_DEADLINE_MS = 2 * 60 * 1000;
+/** Delays before the first status reads; after these, the job is read once a second. */
+const FIRST_POLL_DELAYS_MS = [250, 500, 750] as const;
+const POLL_INTERVAL_MS = 1000;
 const FILE_NAME_MAX = 160;
 
 export type UploadedFile = { name: string; bytes: Uint8Array };
@@ -38,8 +48,22 @@ export type SubmitInput = {
 
 type Dependencies = {
   repository: AnalysisRepository;
+  engine: AnalysisEngine;
   now?: () => Date;
+  wait?: (ms: number) => Promise<void>;
 };
+
+const defaultWait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+const ENGINE_UNAVAILABLE = {
+  errorCode: 'engine_unavailable',
+  errorMessage: 'The analysis service is not available right now. Try again in a moment.',
+} as const;
+
+const isRunning = (job: EngineJob): job is RunningEngineJob =>
+  job.status === 'queued' || job.status === 'processing';
+
+const pollDelay = (attempt: number) => FIRST_POLL_DELAYS_MS[attempt] ?? POLL_INTERVAL_MS;
 
 export function toAnalysis(row: AnalysisRow): Analysis {
   return {
@@ -96,44 +120,74 @@ function validateFile(file: UploadedFile | null): {
  * Use cases for resume analyses. Route handlers call these; nothing here knows about HTTP,
  * and the repository is injected so tests can run it against a real, isolated database.
  */
-export function createAnalysisService({ repository, now = () => new Date() }: Dependencies) {
-  async function moveTo(id: string, stage: AnalysisStage) {
-    await repository.update(id, { stage });
+export function createAnalysisService({
+  repository,
+  engine,
+  now = () => new Date(),
+  wait = defaultWait,
+}: Dependencies) {
+  /** Reads the job until it settles, recording every stage the engine reports on the way. */
+  async function follow(id: string, submitted: EngineJob): Promise<SettledEngineJob> {
+    const deadline = now().getTime() + ENGINE_DEADLINE_MS;
+    let job = submitted;
+    for (let attempt = 0; isRunning(job); attempt++) {
+      if (now().getTime() > deadline) {
+        throw new AnalysisEngineError(`Job ${job.id} did not finish within the deadline.`);
+      }
+      await wait(pollDelay(attempt));
+      const next = await engine.get(job.id);
+      if (isRunning(next) && next.stage !== job.stage) {
+        await repository.update(id, { stage: next.stage });
+      }
+      job = next;
+    }
+    return job;
   }
 
   async function process(
     id: string,
-    bytes: Uint8Array,
-    type: FileType,
+    file: EngineSubmission['file'],
     jobDescription: string | undefined,
   ) {
     try {
-      await repository.update(id, { status: 'processing', stage: 'extracting', startedAt: now() });
-      const text = await extractText(bytes, type);
-      await moveTo(id, 'parsing');
-      if (jobDescription) await moveTo(id, 'matching');
-      await moveTo(id, 'scoring');
+      const submitted = await engine.submit({ file, jobDescription });
+      await repository.update(id, {
+        status: 'processing',
+        stage: submitted.stage,
+        engineJobId: submitted.id,
+        startedAt: now(),
+      });
 
-      const completedAt = now();
-      const report = analyzeResume({ text, jobDescription, referenceDate: completedAt });
+      const job = await follow(id, submitted);
+      if (job.status === 'failed') {
+        await repository.update(id, {
+          status: 'failed',
+          errorCode: job.error.code,
+          errorMessage: job.error.message,
+          completedAt: now(),
+        });
+        return;
+      }
+
       await repository.update(id, {
         status: 'completed',
         stage: 'done',
-        score: report.score,
-        grade: report.grade,
-        report,
-        engineVersion: ENGINE_VERSION,
-        completedAt,
+        score: job.report.score,
+        grade: job.report.grade,
+        report: job.report,
+        engineVersion: job.report.engineVersion,
+        completedAt: now(),
       });
     } catch (error) {
-      const known = error instanceof ExtractionError;
-      if (!known) console.error('Analysis pipeline failed', { id, error });
+      console.error('Analysis pipeline failed', { id, error });
       await repository.update(id, {
         status: 'failed',
-        errorCode: known ? error.code : 'internal_error',
-        errorMessage: known
-          ? error.message
-          : 'The analysis could not be completed. Try again in a moment.',
+        ...(error instanceof AnalysisEngineError
+          ? ENGINE_UNAVAILABLE
+          : {
+              errorCode: 'internal_error',
+              errorMessage: 'The analysis could not be completed. Try again in a moment.',
+            }),
         completedAt: now(),
       });
     }
@@ -150,8 +204,9 @@ export function createAnalysisService({ repository, now = () => new Date() }: De
     get,
 
     /**
-     * Validates and records an upload. The returned `run` performs the analysis; the caller
-     * decides when (after the response in production, immediately in tests).
+     * Validates and records an upload. The returned `run` hands the file to the analysis engine
+     * and follows the job; the caller decides when (after the response in production, at once
+     * in tests).
      */
     async submit({ file, fields, ownerHash }: SubmitInput) {
       const { jobTitle, jobDescription } = AnalyzeFieldsSchema.parse(fields);
@@ -171,7 +226,10 @@ export function createAnalysisService({ repository, now = () => new Date() }: De
         createdAt: current,
       });
 
-      return { analysis: toAnalysis(row), run: () => process(row.id, bytes, type, jobDescription) };
+      return {
+        analysis: toAnalysis(row),
+        run: () => process(row.id, { name, type, bytes }, jobDescription),
+      };
     },
 
     async list(query: ListAnalysesQuery, ownerHash: string | null): Promise<AnalysisList> {

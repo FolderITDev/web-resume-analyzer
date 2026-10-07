@@ -44,7 +44,7 @@ export function openApiDocument() {
       title: `${siteConfig.name} API`,
       version: '1.0.0',
       description:
-        'REST API of Resume Analyzer, built by Folder IT. Uploads are analyzed asynchronously by a deterministic rules engine; no language model is involved.',
+        'REST API of Resume Analyzer, built by Folder IT. Uploads are handed to the analysis engine as asynchronous jobs; poll an analysis until it is completed or failed.',
       contact: { name: siteConfig.company.name, url: siteConfig.company.url },
       license: { name: 'MIT', identifier: 'MIT' },
     },

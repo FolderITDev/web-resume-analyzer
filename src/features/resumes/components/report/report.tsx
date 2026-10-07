@@ -206,9 +206,7 @@ export function Report({ report }: { report: AnalysisReport }) {
         </div>
       </Block>
 
-      <p className="readout text-ink-3">
-        Engine {report.engineVersion} · deterministic, no language model
-      </p>
+      <p className="readout text-ink-3">Analysis engine {report.engineVersion}</p>
     </div>
   );
 }

@@ -6,11 +6,11 @@ import { type Analysis, type AnalysisStage } from '@/lib/validation/analysis';
 type PipelineStage = { id: Exclude<AnalysisStage, 'done'>; label: string; detail: string };
 
 const STAGES: readonly PipelineStage[] = [
-  { id: 'received', label: 'Received', detail: 'File checked and queued' },
-  { id: 'extracting', label: 'Extracting', detail: 'Reading the text in memory' },
+  { id: 'received', label: 'Received', detail: 'File checked and sent to the engine' },
+  { id: 'extracting', label: 'Extracting', detail: 'Reading the document text' },
   { id: 'parsing', label: 'Parsing', detail: 'Sections, bullets and dates' },
   { id: 'matching', label: 'Matching', detail: 'Comparing with the job description' },
-  { id: 'scoring', label: 'Scoring', detail: 'Applying sixteen rules' },
+  { id: 'scoring', label: 'Scoring', detail: 'Scoring six categories' },
 ];
 
 /** The stages an analysis goes through; matching only runs when a job description was given. */
@@ -42,7 +42,7 @@ export function AnalysisProgress({
         <p className="text-lead text-ink-2" aria-live="polite">
           {current
             ? `${current.label}: ${current.detail.toLowerCase()}.`
-            : 'Waiting for the pipeline to start.'}
+            : 'Waiting for the analysis engine to start.'}
         </p>
       </div>
 

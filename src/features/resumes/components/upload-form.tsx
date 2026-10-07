@@ -17,7 +17,6 @@ import { ACCEPTED_UPLOAD, JOB_DESCRIPTION_MAX_LENGTH } from '@/lib/validation/an
 
 import { isExampleId, loadExampleFile, EXAMPLE_FILES, type ExampleId } from '../examples';
 import { UploadFormSchema, type UploadFormValues } from '../upload-schema';
-import { rememberSubmission } from '../use-paced-stage';
 
 type Phase =
   { name: 'editing' } | { name: 'uploading'; progress: number } | { name: 'redirecting' };
@@ -112,7 +111,6 @@ export function UploadForm() {
         onProgress: (progress) => setPhase({ name: 'uploading', progress }),
       });
       setPhase({ name: 'redirecting' });
-      rememberSubmission(submitted.id);
       router.push(`/analyses/${submitted.id}`);
     } catch (error) {
       setPhase({ name: 'editing' });
@@ -230,7 +228,7 @@ export function UploadForm() {
             id={`${inputId}-hint`}
             className={cn('text-[0.8125rem]', fileError ? 'text-danger' : 'text-ink-3')}
           >
-            {fileError ?? 'Files are read in memory and discarded after the analysis.'}
+            {fileError ?? 'Files are sent to the analysis engine and never stored here.'}
           </p>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-2">
             <span>No resume at hand? Try an example:</span>

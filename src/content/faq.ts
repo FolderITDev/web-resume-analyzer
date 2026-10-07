@@ -1,14 +1,14 @@
 /** Questions answered on the landing page and published as FAQPage structured data. */
 export const FAQ = [
   {
-    question: 'Is there an AI model behind the analysis?',
+    question: 'How is the resume analyzed?',
     answer:
-      'No. Resume Analyzer uses a deterministic rules engine written in TypeScript. The same file always produces the same report, and every strength, issue and recommendation cites the rule that produced it. The rules are listed on this page and in the source code.',
+      'Resume Analyzer checks the upload and hands it to its analysis engine as a background job. The engine reads the document, splits it into sections, compares it with the job description when there is one and scores six weighted categories. Every strength, issue and recommendation cites the check that produced it, and the page follows each stage as the engine reports it.',
   },
   {
     question: 'What happens to the file I upload?',
     answer:
-      'The file is read in memory on the server, its text is extracted and analyzed, and then it is discarded. Only the file name, its size and the resulting report are stored, linked to an anonymous cookie in your browser, and they are deleted automatically after 24 hours. You can also delete an analysis yourself.',
+      'The file is sent over an authenticated connection to the analysis engine for processing; Resume Analyzer never writes it to disk or to its database. Only the file name, its size and the resulting report are stored, linked to an anonymous cookie in your browser, and they are deleted automatically after 24 hours. You can also delete an analysis yourself.',
   },
   {
     question: 'Which file types are supported?',
@@ -18,7 +18,7 @@ export const FAQ = [
   {
     question: 'How does the job description comparison work?',
     answer:
-      'When you paste a job description, the analyzer detects the skills it mentions and its most frequent distinctive terms, then reports which of them your resume already shows and which it does not. Skills weigh 70% of the match score and general keywords 30%.',
+      'When you paste a job description, the analysis engine detects the skills and distinctive terms it asks for, then the report shows which of them your resume already covers and which it does not, with a match score from 0 to 100.',
   },
   {
     question: 'Can I use the API from my own application?',
@@ -33,6 +33,6 @@ export const FAQ = [
   {
     question: 'Is the source code available?',
     answer:
-      'Yes. The complete application, including the rules engine, the API, the database migrations and the tests, is published on GitHub under the MIT license.',
+      'Yes. The complete application, including the API, the analysis engine client, the database migrations and the tests, is published on GitHub under the MIT license.',
   },
 ] as const;

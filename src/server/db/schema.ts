@@ -26,8 +26,8 @@ export const fileType = pgEnum('file_type', ['pdf', 'docx']);
 export const grade = pgEnum('grade', GRADES);
 
 /**
- * One row per analysis. The uploaded file and the job description are never stored: the
- * pipeline keeps them in memory, and only file metadata and the report are persisted.
+ * One row per analysis. The uploaded file and the job description are never stored: they are
+ * forwarded to the analysis engine, and only file metadata and the report are persisted.
  */
 export const analyses = pgTable(
   'analyses',
@@ -46,6 +46,8 @@ export const analyses = pgTable(
     score: smallint('score'),
     grade: grade('grade'),
     report: jsonb('report').$type<AnalysisReport>(),
+    /** The job ID the analysis engine assigned; used to follow the job until it finishes. */
+    engineJobId: text('engine_job_id'),
     engineVersion: text('engine_version'),
     errorCode: text('error_code'),
     errorMessage: text('error_message'),

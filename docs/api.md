@@ -63,11 +63,12 @@ Branch on `code`; `detail` is written for people and may change.
 
 ## Analysis error codes
 
-A `failed` analysis carries `error.code`:
+A `failed` analysis carries `error.code`. Codes reported by the analysis engine are passed through with its message; the most common are listed first.
 
-| Code                     | Meaning                                                                   |
-| ------------------------ | ------------------------------------------------------------------------- |
-| `no_text_found`          | The document has no extractable text, usually a scanned image.            |
-| `unreadable_file`        | The document could not be opened: damaged or password protected.          |
-| `processing_interrupted` | The server restarted before the analysis finished. Upload the file again. |
-| `internal_error`         | An unexpected failure in the pipeline.                                    |
+| Code                     | Meaning                                                                       |
+| ------------------------ | ----------------------------------------------------------------------------- |
+| `no_text_found`          | Engine: the document has no extractable text, usually a scanned image.        |
+| `unreadable_file`        | Engine: the document could not be opened, because it is damaged or protected. |
+| `engine_unavailable`     | The analysis engine could not be reached, timed out or answered unexpectedly. |
+| `processing_interrupted` | The server restarted before the analysis finished. Upload the file again.     |
+| `internal_error`         | An unexpected failure in the pipeline.                                        |

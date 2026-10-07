@@ -30,8 +30,8 @@ export default function ToolLayout({ children }: LayoutProps<'/'>) {
         </main>
         <footer className="border-t border-rule">
           <p className="mx-auto max-w-[90rem] px-5 py-5 text-[0.8125rem] text-ink-3 sm:px-8">
-            Resume Analyzer by Folder IT. Uploaded files are processed in memory and never stored;
-            reports expire after 24 hours.
+            Resume Analyzer by Folder IT. Uploaded files are sent to the analysis engine and never
+            stored here; reports expire after 24 hours.
           </p>
         </footer>
       </div>

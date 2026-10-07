@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { ImageResponse } from 'next/og';
 
-import { EXAMPLE_REPORT } from '@/features/landing/example-report';
+import { exampleReport } from '@/content/example-reports';
 
 export const alt = 'Resume Analyzer by Folder IT: explainable resume scoring';
 export const size = { width: 1200, height: 630 };
@@ -18,7 +18,7 @@ const [light, semibold, mono] = await Promise.all([
 
 /** Social card in the specimen style: the product name, one line and a weighted score. */
 export default function OpengraphImage() {
-  const { score } = EXAMPLE_REPORT;
+  const { score } = exampleReport('diego-marquez');
   return new ImageResponse(
     <div
       style={{
@@ -67,7 +67,7 @@ export default function OpengraphImage() {
             letterSpacing: 1,
           }}
         >
-          16 PUBLISHED RULES · PDF AND DOCX · REST API
+          EXPLAINABLE SCORE · PDF AND DOCX · REST API
         </div>
       </div>
       <div

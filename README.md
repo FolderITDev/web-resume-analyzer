@@ -55,29 +55,29 @@
 
 **Core capabilities:** Nearshore Staff Augmentation · AI-Ready Engineering Teams · AI Software Development · IoT Development · Web & Mobile Apps · Salesforce Consulting · ServiceNow Development
 
-This repository holds one of its products: **Resume Analyzer**, a full-stack web application that scores PDF and DOCX resumes with a deterministic, published rule set, built with Next.js 16, React 19, strict TypeScript, PostgreSQL and Drizzle ORM. A visitor uploads a resume, optionally pastes a job description, follows the analysis as it runs and reads a report with a score, detected skills, years of experience, strengths, issues and prioritized recommendations.
+This repository holds one of its products: **Resume Analyzer**, a full-stack web application that scores PDF and DOCX resumes through an analysis engine, built with Next.js 16, React 19, strict TypeScript, PostgreSQL and Drizzle ORM. A visitor uploads a resume, optionally pastes a job description, follows the analysis as it runs and reads a report with a score, detected skills, years of experience, strengths, issues and prioritized recommendations.
 
 ## Overview
 
 ### What this is
 
 - A **full-stack web application**: a public, indexable landing page, the analyzer itself, a REST API documented with OpenAPI 3.1, and PostgreSQL persistence with versioned migrations.
-- **Asynchronous document processing on the web**: the upload returns `202 Accepted`, the pipeline runs after the response, and the browser follows each stage until the report is ready.
-- **Explainable scoring**: sixteen rules, each with a stable ID that appears next to every finding, published on the landing page and in [`src/domain/analysis/rules.ts`](src/domain/analysis/rules.ts).
+- **Asynchronous document processing on the web**: the upload returns `202 Accepted`, the file is handed to the analysis engine as a job, and the browser follows each stage the engine reports until the report is ready.
+- **Explainable scoring**: every strength, issue and recommendation carries the stable ID of the check that produced it.
+- **A typed integration with an external service**: the analysis engine is reached over HTTP at `ANALYSIS_ENGINE_URL`, and every response is validated against its Zod contract before it reaches the database.
 - Original source code under the MIT license, with self-hosted fonts.
 
 ### What this is not
 
-- Not an AI product. There is no language model, no external API and no hidden prompt; the same file always produces the same report.
 - Not an applicant tracking system. There are no accounts, candidates, jobs or recruiter workflows.
 - Not a hiring decision tool. The score measures how clearly a resume communicates, not a person's ability.
-- Not a document store. Uploaded files are processed in memory and never written to disk or to the database.
+- Not a document store. Uploaded files are forwarded to the analysis engine and never written to this application's disk or database.
 
 ### Features
 
 - **Upload with real progress.** Drag and drop or browse for a PDF or DOCX up to 5 MB. The browser checks the file at once; the server verifies its bytes, not its name. Uploads can be cancelled.
-- **Asynchronous pipeline.** Received → Extracting → Parsing → Matching → Scoring, stored on the analysis and shown live with TanStack Query polling.
-- **Report.** A score from 0 to 100 across six weighted categories, a one-sentence summary, recommendations ordered by priority, strengths and issues with their rule IDs, every detected skill with its mentions, estimated years of experience from merged date ranges, and document statistics.
+- **Asynchronous pipeline.** Received → Extracting → Parsing → Matching → Scoring, as reported by the analysis engine, stored on the analysis and shown live with TanStack Query polling.
+- **Report.** A score from 0 to 100 across six weighted categories, a one-sentence summary, recommendations ordered by priority, strengths and issues with their check IDs, every detected skill with its mentions, estimated years of experience from merged date ranges, and document statistics.
 - **Job description match.** Skills the posting asks for that the resume shows and lacks, keyword coverage and the distinctive terms that never appear.
 - **History.** Example reports plus the visitor's own, with search, status filter, sorting and pagination kept in the URL, and optimistic deletion.
 - **Examples.** A PDF and a DOCX resume can be loaded with one click, together with a matching job description.
@@ -102,7 +102,7 @@ Requirements:
 
 - **Node.js 24 or later** (pinned in `.node-version`) and **pnpm 10** (pinned in `packageManager`; `corepack enable` installs it).
 - **Docker** to run PostgreSQL 17 locally, or any PostgreSQL 15+ server.
-- No API keys, accounts or paid services.
+- The base URL of the **analysis engine** (and its API key, if it requires one), set as `ANALYSIS_ENGINE_URL` and `ANALYSIS_ENGINE_API_KEY` in `.env`. Without it, the landing page, the API reference and the history work, and new uploads fail with `engine_unavailable`.
 
 ```bash
 git clone https://github.com/FolderITDev/web-resume-analyzer.git
@@ -153,7 +153,7 @@ Next.js App Router ── Server Components for public pages · client islands f
 REST API (Route Handlers) ── Zod validation in and out · RFC 9457 problems · after()
    │
    ▼
-Services ── use cases and the analysis pipeline ──► Domain (pure rules engine)
+Services ── use cases; analysis jobs ──► Analysis engine (HTTP, ANALYSIS_ENGINE_URL)
    │
    ▼
 Repositories ── Drizzle queries only
@@ -162,26 +162,25 @@ Repositories ── Drizzle queries only
 PostgreSQL ── analyses and reports, never the file
 ```
 
-The upload handler validates the request, records a queued analysis and responds `202` with a `Location` header. Next.js `after()` then runs the pipeline outside the request: the text is extracted in memory (pdf.js for PDF, mammoth for DOCX), passed to the pure `analyzeResume` function and the report is stored. The browser polls the analysis every 700 ms and stops at a terminal status.
+The upload handler validates the request, records a queued analysis and responds `202` with a `Location` header. Next.js `after()` then submits the file to the analysis engine's job API (`POST /v1/resume-analyses`), stores the engine's job ID and reads the job (`GET /v1/resume-analyses/{id}`) until it settles, persisting every stage the engine reports. A completed job's report is validated against the `AnalysisReport` contract and stored; a failed job keeps the engine's error code and message. The browser polls the analysis every 700 ms and stops at a terminal status.
 
 ### Repository layout
 
-| Path                   | What it holds                                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `src/app/(marketing)/` | Public, indexable pages: the landing page and the API reference.                                                      |
-| `src/app/(tool)/`      | The tool: upload, report and history. Marked `noindex`.                                                               |
-| `src/app/api/`         | Route Handlers: thin adapters from HTTP to services.                                                                  |
-| `src/domain/analysis/` | The rules engine: text normalization, sections, dates, skills, rules, scoring and job matching. No I/O.               |
-| `src/server/`          | Server-only code: services, repositories, the Drizzle schema, text extraction, HTTP helpers and the OpenAPI document. |
-| `src/lib/validation/`  | Zod contracts shared by the API, the browser client and the OpenAPI document.                                         |
-| `src/lib/api/`         | The typed browser client, with upload progress and typed errors.                                                      |
-| `src/features/`        | Feature UI: the upload form, report, history and landing sections, plus TanStack Query options.                       |
-| `src/components/`      | The design system: specimen components, buttons, fields and feedback.                                                 |
-| `src/content/`         | Example resumes, job postings and FAQ copy.                                                                           |
-| `drizzle/`             | Generated SQL migrations.                                                                                             |
-| `tests/`               | Unit, component and integration tests (Vitest).                                                                       |
-| `e2e/`                 | End-to-end and accessibility tests (Playwright and axe).                                                              |
-| `docs/`                | Architecture, API errors, AI-assisted engineering, font licenses and screenshots.                                     |
+| Path                   | What it holds                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `src/app/(marketing)/` | Public, indexable pages: the landing page and the API reference.                                                    |
+| `src/app/(tool)/`      | The tool: upload, report and history. Marked `noindex`.                                                             |
+| `src/app/api/`         | Route Handlers: thin adapters from HTTP to services.                                                                |
+| `src/server/`          | Server-only code: services, repositories, the Drizzle schema, the analysis engine client, HTTP helpers and OpenAPI. |
+| `src/lib/validation/`  | Zod contracts shared by the API, the browser client and the OpenAPI document.                                       |
+| `src/lib/api/`         | The typed browser client, with upload progress and typed errors.                                                    |
+| `src/features/`        | Feature UI: the upload form, report, history and landing sections, plus TanStack Query options.                     |
+| `src/components/`      | The design system: specimen components, buttons, fields and feedback.                                               |
+| `src/content/`         | Example resumes, job postings, the engine's reports for them and FAQ copy.                                          |
+| `drizzle/`             | Generated SQL migrations.                                                                                           |
+| `tests/`               | Unit, component and integration tests (Vitest) and the engine contract double they run against.                     |
+| `e2e/`                 | End-to-end and accessibility tests (Playwright and axe).                                                            |
+| `docs/`                | Architecture, API errors, AI-assisted engineering, font licenses and screenshots.                                   |
 
 ### API
 
@@ -202,22 +201,22 @@ curl -i -X POST http://localhost:3010/apps/resume-analyzer/api/resumes/analyze -
 
 ### Database
 
-One table, `analyses`, defined in [`src/server/db/schema.ts`](src/server/db/schema.ts): file metadata, status and stage enums, the score and grade, the report as JSONB, the engine version, error details and timestamps. Check constraints keep scores in range and require every row to be either an example or owned by a session. Indexes cover the two list queries (examples and one owner, newest first).
+One table, `analyses`, defined in [`src/server/db/schema.ts`](src/server/db/schema.ts): file metadata, status and stage enums, the score and grade, the report as JSONB, the engine's job ID and version, error details and timestamps. Check constraints keep scores in range and require every row to be either an example or owned by a session. Indexes cover the two list queries (examples and one owner, newest first).
 
 ```bash
 pnpm db:generate   # create a migration after changing the schema
 pnpm db:migrate    # apply migrations
-pnpm db:seed       # replace the example analyses; visitor analyses are untouched
+pnpm db:seed       # replace the example analyses with the stored engine reports; visitor analyses are untouched
 ```
 
 ### Engineering decisions
 
 - **Contracts first.** Every request and response is a Zod schema in `src/lib/validation`. Handlers parse input, validate output before sending it, and the OpenAPI document is generated from the same schemas, so documentation and behavior cannot drift.
-- **The domain is pure.** `analyzeResume` takes text, an optional job description and a reference date, and returns a report. It is deterministic, has no I/O and is tested directly.
-- **Work after the response.** The upload is answered as soon as it is validated and recorded; extraction and scoring run in `after()`. Stage changes are persisted, so the interface shows real progress. After an upload, the browser reveals each completed stage for at least 450 ms so the progress can be read, never ahead of the server.
-- **Files never persist.** Bytes live in memory for the length of the pipeline. Only metadata and the report are stored.
+- **The engine is a dependency, not a module.** The analysis runs in an external engine behind `ANALYSIS_ENGINE_URL`. The client in `src/server/analysis-engine` is the only code that knows its URL; its responses are parsed with Zod like any untrusted input, and transport failures, timeouts and contract violations all end in a failed analysis with `engine_unavailable`.
+- **Work after the response.** The upload is answered as soon as it is validated and recorded; the engine job is submitted and followed in `after()`. Every stage the engine reports is persisted, so the interface shows the job's real progress and nothing else.
+- **Files never persist here.** Bytes are held in memory only until they are handed to the engine. Only metadata and the report are stored.
 - **Anonymous ownership.** A random token in an HttpOnly cookie identifies the browser; only its SHA-256 hash is stored. Visitors see examples and their own analyses, nothing else.
-- **Server and client rendering by purpose.** Public pages are prerendered Server Components with real engine output. Only interactive pieces are client components.
+- **Server and client rendering by purpose.** Public pages are prerendered Server Components showing stored engine reports. Only interactive pieces are client components.
 - **Motion as the specimen moves.** The score's font weight settles to its value and axis knobs sweep into place with `@starting-style` and transforms only. Reduced motion is respected.
 
 Full rationale: [docs/architecture.md](docs/architecture.md).
@@ -231,11 +230,11 @@ pnpm build          # production build
 pnpm test:e2e       # Playwright against the production build (desktop and mobile)
 ```
 
-Integration tests need the test database created by `docker/init-test-db.sql` (run automatically the first time `docker compose up` creates the volume).
+Integration tests need the test database created by `docker/init-test-db.sql` (run automatically the first time `docker compose up` creates the volume). Integration and end-to-end tests run against a double of the engine's job API in `tests/support/analysis-engine.ts`, so they never reach a real engine.
 
 The suites cover:
 
-- **Unit:** text normalization, section detection, date ranges and overlap merging, skill matching with aliases and boundaries, quantified bullets, keyword extraction, job matching, grading, determinism and the report contract.
+- **Unit:** the engine client (request shape, API key, contract validation, HTTP and network failures) and the pipeline (every reported stage recorded, engine errors kept, an unavailable engine failing the analysis).
 - **Components:** accessible meters, the score-to-weight mapping, alerts and status messages, finding lists and empty states.
 - **Integration:** every endpoint through its real Route Handler and a real PostgreSQL database: PDF and DOCX uploads, job matching, image-only files, spoofed and oversized files, validation errors, privacy between visitors, search, sorting, pagination, LIKE escaping, deletion rules and the OpenAPI document.
 - **End-to-end:** uploading a PDF and reading the report, comparing an example with its job description, rejecting an unsupported file, structured data and indexing rules, and axe WCAG 2.2 AA checks on four pages, at desktop and mobile sizes.
@@ -303,7 +302,7 @@ An AI Pod is a delivery model where one senior engineer (the Forward Deployed En
 <details>
 <summary>Is this repository production-ready?</summary>
 
-No. Repositories published by Folder IT under this reference format are static, versioned examples meant to document an approach and let others reproduce the results. They are not maintained as production dependencies. Resume Analyzer in particular has no accounts or OCR, and runs its rate limiter and analysis pipeline in process.
+No. Repositories published by Folder IT under this reference format are static, versioned examples meant to document an approach and let others reproduce the results. They are not maintained as production dependencies. Resume Analyzer in particular has no accounts or OCR, runs its rate limiter in process and follows engine jobs from the web server.
 
 </details>
 
@@ -315,16 +314,16 @@ Yes, under the license specified in this repository (see the [LICENSE](LICENSE.m
 </details>
 
 <details>
-<summary>Does this repository call any external LLM or API?</summary>
+<summary>Does this repository call any external API?</summary>
 
-No. The analysis is a deterministic rules engine in TypeScript. The application makes no outbound network requests at runtime: fonts are self-hosted and there is no analytics, model API or third-party service.
+One: the analysis engine at `ANALYSIS_ENGINE_URL`, which receives each uploaded resume and returns its report. The application makes no other outbound requests at runtime: fonts are self-hosted and there is no analytics or third-party script.
 
 </details>
 
 <details>
-<summary>Why is the score deterministic instead of AI-generated?</summary>
+<summary>Why does every finding carry an ID?</summary>
 
-So that every number can be explained and reproduced. Each finding names the rule that produced it, the rules are published, and the same file always gets the same report. That makes the analyzer testable like any other business logic.
+So that every number can be explained. Each strength, issue and recommendation names the check that produced it, and the report shows the version of the engine that wrote it, so a stored report can always be traced back.
 
 </details>
 

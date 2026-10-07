@@ -52,7 +52,7 @@ export function webApplicationJsonLd(): JsonLdObject {
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     featureList: [
       'PDF and DOCX resume upload',
-      'Deterministic, rule-based resume scoring',
+      'Explainable resume scoring across six categories',
       'Skill and experience detection',
       'Job description matching',
       'REST API with OpenAPI 3.1 documentation',

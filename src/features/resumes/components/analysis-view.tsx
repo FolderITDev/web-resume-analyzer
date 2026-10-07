@@ -12,7 +12,6 @@ import { formatBytes, formatDateTime } from '@/lib/format';
 import { type Analysis } from '@/lib/validation/analysis';
 
 import { analysisQuery, useDeleteAnalysis } from '../queries';
-import { usePacedStage } from '../use-paced-stage';
 import { AnalysisProgress } from './analysis-progress';
 import { Report } from './report/report';
 
@@ -148,10 +147,6 @@ export function AnalysisView({ id }: { id: string }) {
 }
 
 function AnalysisContent({ analysis }: { analysis: Analysis }) {
-  const view = usePacedStage(analysis);
-
-  if (view.kind === 'progress') return <AnalysisProgress analysis={analysis} stage={view.stage} />;
-
   if (analysis.status === 'failed') {
     return (
       <div className="flex max-w-2xl flex-col gap-6">

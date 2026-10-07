@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   typedRoutes: true,
   poweredByHeader: false,
-  serverExternalPackages: ['mammoth'],
   turbopack: {
     rules: {
       '*.css': {

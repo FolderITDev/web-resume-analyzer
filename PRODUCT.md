@@ -17,25 +17,25 @@ Next.js (App Router, Server Components, Route Handlers) · React · strict TypeS
 
 ## Product Purpose
 
-Resume Analyzer accepts a PDF or DOCX resume, extracts its text on the server and returns a structured report: an overall score, detected skills, estimated years of experience, strengths, issues and recommendations. With a job description it adds a match view: skills the posting asks for that the resume shows, and those it lacks. Past analyses are listed in a history.
+Resume Analyzer accepts a PDF or DOCX resume, hands it to its analysis engine and returns a structured report: an overall score, detected skills, estimated years of experience, strengths, issues and recommendations. With a job description it adds a match view: skills the posting asks for that the resume shows, and those it lacks. Past analyses are listed in a history.
 
-It also shows, in public, how Folder IT builds web applications: a small, complete full-stack application with file uploads, validation, an asynchronous processing pipeline, a REST API with OpenAPI documentation, PostgreSQL persistence and careful UI states.
+It also shows, in public, how Folder IT builds web applications: a small, complete full-stack application with file uploads, validation, asynchronous jobs on an external analysis engine, a REST API with OpenAPI documentation, PostgreSQL persistence and careful UI states.
 
 ## Positioning
 
-The analysis is deterministic and explainable. There is no language model: the same file always produces the same report, and every finding points to the rule that produced it. The landing states this plainly instead of presenting the result as AI.
+The analysis is explainable: every strength, issue and recommendation points to the check that produced it, and every report records the engine version that wrote it. The processing stages a visitor sees are the ones the engine reports.
 
 ## Operating Context
 
 - A visitor drops a file, watches upload progress and processing stages, then reads the report and acts on the recommendations.
-- Files are processed and then discarded; only extracted metrics and the report are stored.
+- Files are sent to the analysis engine and never stored by the application; only file metadata and the report are stored.
 - The history lists the visitor's own reports alongside read-only example reports; there are no accounts.
 
 ## Capabilities and Constraints
 
 - Inputs: PDF and DOCX up to 5 MB; scanned image-only PDFs cannot be read and must say so.
 - Endpoint: `POST /api/resumes/analyze` plus read endpoints for analyses and history.
-- No external APIs, no paid services, no real personal data in example content.
+- One external service: the analysis engine at `ANALYSIS_ENGINE_URL`. No other external APIs and no real personal data in example content.
 - Served under `/apps/resume-analyzer` (Next.js `basePath`). The landing (`/`) and API reference (`/docs/api`) are indexable; the tool (`/analyze`, `/analyses`) is `noindex`.
 - English copy.
 
@@ -53,7 +53,7 @@ The analysis is deterministic and explainable. There is no language model: the s
 ## Product Principles
 
 1. Explain every score: a number without its reasons is not shown.
-2. Honest about the mechanism: rules, not AI.
+2. Honest progress: stages shown are the stages the engine reports, never a timer.
 3. The report is the product: it must read well and be scannable.
 4. Code quality is the marketing: the repository is part of the experience.
 

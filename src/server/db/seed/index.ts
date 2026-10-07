@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm';
 
 import { EXAMPLE_JOB_DESCRIPTIONS } from '@/content/example-jobs';
+import { exampleReport } from '@/content/example-reports';
 import { EXAMPLE_RESUMES } from '@/content/example-resumes';
-import { analyzeResume, ENGINE_VERSION } from '@/domain/analysis/analyze';
 
 import { type Database } from '../client';
 import { analyses, type NewAnalysisRow } from '../schema';
@@ -10,7 +10,7 @@ import { analyses, type NewAnalysisRow } from '../schema';
 const HOUR = 60 * 60 * 1000;
 
 /**
- * Replaces the example analyses with fresh ones computed by the current engine. Visitor
+ * Replaces the example analyses with the stored engine reports for the example resumes. Visitor
  * analyses are left untouched, so the seed is safe to run against a live database.
  */
 export async function seedDatabase(db: Database, now = new Date()): Promise<number> {
@@ -20,7 +20,7 @@ export async function seedDatabase(db: Database, now = new Date()): Promise<numb
     const jobDescription = resume.jobDescriptionSlug
       ? EXAMPLE_JOB_DESCRIPTIONS[resume.jobDescriptionSlug]?.text
       : undefined;
-    const report = analyzeResume({ text: resume.text, jobDescription, referenceDate: completedAt });
+    const report = exampleReport(resume.slug);
     return {
       isExample: true,
       ownerHash: null,
@@ -34,7 +34,7 @@ export async function seedDatabase(db: Database, now = new Date()): Promise<numb
       score: report.score,
       grade: report.grade,
       report,
-      engineVersion: ENGINE_VERSION,
+      engineVersion: report.engineVersion,
       createdAt,
       startedAt: new Date(createdAt.getTime() + 300),
       completedAt,

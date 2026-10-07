@@ -3,36 +3,37 @@ const STAGES = [
     name: 'Received',
     weight: 240,
     detail:
-      'The upload is checked from its bytes: a real PDF or DOCX, at most 5 MB. A row is recorded and the API answers 202 Accepted.',
+      'The upload is checked from its bytes: a real PDF or DOCX, at most 5 MB. A row is recorded, the file goes to the analysis engine as a job and the API answers 202 Accepted.',
   },
   {
     name: 'Extracting',
     weight: 380,
     detail:
-      'Text is read in memory with pdf.js or from the Word XML. The file itself is never written to disk or to the database.',
+      'The engine reads the text of the document. The file itself is never written to the application\u2019s disk or database.',
   },
   {
     name: 'Parsing',
     weight: 520,
     detail:
-      'Headings become sections, bullets become achievements, and date ranges become merged, non-overlapping months of experience.',
+      'Headings become sections, bullets become achievements, and date ranges become merged, non-overlapping years of experience.',
   },
   {
     name: 'Matching',
     weight: 660,
     detail:
-      'With a job description, its skills and distinctive terms are compared with the resume. Without one, this stage is skipped.',
+      'With a job description, its skills and distinctive terms are compared with the resume. Without one, the engine skips this stage.',
   },
   {
     name: 'Scoring',
     weight: 800,
     detail:
-      'Sixteen rules score six weighted categories. Each strength, issue and recommendation keeps the ID of its rule.',
+      'Six weighted categories are scored. Each strength, issue and recommendation keeps the ID of the check that produced it.',
   },
 ] as const;
 
 /**
- * The pipeline set as a specimen waterfall: each stage gains weight as the analysis takes shape.
+ * The engine's pipeline set as a specimen waterfall: each stage gains weight as the analysis
+ * takes shape.
  */
 export function PipelineWaterfall() {
   return (

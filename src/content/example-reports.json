@@ -1,0 +1,1600 @@
+{
+  "avery-lindqvist": {
+    "engineVersion": "2026.10.2",
+    "score": 98,
+    "grade": "excellent",
+    "summary": "An excellent resume: every category scores 90 or higher.",
+    "categories": [
+      {
+        "id": "structure",
+        "label": "Structure",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "impact",
+        "label": "Impact",
+        "weight": 0.25,
+        "score": 95
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.15,
+        "score": 93
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "weight": 0.1,
+        "score": 100
+      },
+      {
+        "id": "completeness",
+        "label": "Completeness",
+        "weight": 0.1,
+        "score": 100
+      }
+    ],
+    "sections": [
+      {
+        "id": "summary",
+        "present": true
+      },
+      {
+        "id": "experience",
+        "present": true
+      },
+      {
+        "id": "education",
+        "present": true
+      },
+      {
+        "id": "skills",
+        "present": true
+      },
+      {
+        "id": "projects",
+        "present": true
+      },
+      {
+        "id": "certifications",
+        "present": false
+      }
+    ],
+    "skills": [
+      {
+        "id": "unit-testing",
+        "name": "Unit testing",
+        "category": "testing",
+        "mentions": 4
+      },
+      {
+        "id": "aws",
+        "name": "AWS",
+        "category": "cloud",
+        "mentions": 3
+      },
+      {
+        "id": "docker",
+        "name": "Docker",
+        "category": "cloud",
+        "mentions": 3
+      },
+      {
+        "id": "graphql",
+        "name": "GraphQL",
+        "category": "backend",
+        "mentions": 3
+      },
+      {
+        "id": "nodejs",
+        "name": "Node.js",
+        "category": "backend",
+        "mentions": 3
+      },
+      {
+        "id": "react",
+        "name": "React",
+        "category": "frontend",
+        "mentions": 3
+      },
+      {
+        "id": "accessibility",
+        "name": "Accessibility",
+        "category": "frontend",
+        "mentions": 2
+      },
+      {
+        "id": "ci-cd",
+        "name": "CI/CD",
+        "category": "cloud",
+        "mentions": 2
+      },
+      {
+        "id": "e2e-testing",
+        "name": "End-to-end testing",
+        "category": "testing",
+        "mentions": 2
+      },
+      {
+        "id": "javascript",
+        "name": "JavaScript",
+        "category": "language",
+        "mentions": 2
+      },
+      {
+        "id": "nextjs",
+        "name": "Next.js",
+        "category": "frontend",
+        "mentions": 2
+      },
+      {
+        "id": "postgresql",
+        "name": "PostgreSQL",
+        "category": "data",
+        "mentions": 2
+      },
+      {
+        "id": "redis",
+        "name": "Redis",
+        "category": "data",
+        "mentions": 2
+      },
+      {
+        "id": "redux",
+        "name": "Redux",
+        "category": "frontend",
+        "mentions": 2
+      },
+      {
+        "id": "rest",
+        "name": "REST APIs",
+        "category": "backend",
+        "mentions": 2
+      },
+      {
+        "id": "typescript",
+        "name": "TypeScript",
+        "category": "language",
+        "mentions": 2
+      },
+      {
+        "id": "code-review",
+        "name": "Code review",
+        "category": "practice",
+        "mentions": 1
+      },
+      {
+        "id": "express",
+        "name": "Express",
+        "category": "backend",
+        "mentions": 1
+      },
+      {
+        "id": "mentoring",
+        "name": "Mentoring",
+        "category": "practice",
+        "mentions": 1
+      },
+      {
+        "id": "orm",
+        "name": "ORMs",
+        "category": "data",
+        "mentions": 1
+      },
+      {
+        "id": "php",
+        "name": "PHP",
+        "category": "language",
+        "mentions": 1
+      },
+      {
+        "id": "python",
+        "name": "Python",
+        "category": "language",
+        "mentions": 1
+      },
+      {
+        "id": "sql",
+        "name": "SQL",
+        "category": "language",
+        "mentions": 1
+      },
+      {
+        "id": "tailwind",
+        "name": "Tailwind CSS",
+        "category": "frontend",
+        "mentions": 1
+      },
+      {
+        "id": "terraform",
+        "name": "Terraform",
+        "category": "cloud",
+        "mentions": 1
+      }
+    ],
+    "experience": {
+      "estimatedYears": 10.8,
+      "datedRoles": 3,
+      "earliestYear": 2016,
+      "hasCurrentRole": true
+    },
+    "strengths": [
+      {
+        "ruleId": "STR-01",
+        "category": "structure",
+        "severity": "high",
+        "title": "Clear experience section",
+        "detail": "Your work history sits under its own heading, where reviewers look first."
+      },
+      {
+        "ruleId": "IMP-01",
+        "category": "impact",
+        "severity": "high",
+        "title": "Measurable achievements",
+        "detail": "10 of 11 bullets include a number, percentage or amount."
+      },
+      {
+        "ruleId": "IMP-02",
+        "category": "impact",
+        "severity": "medium",
+        "title": "Bullets lead with action verbs",
+        "detail": "10 of 11 bullets start with an action verb such as \"Built\", \"Led\" or \"Reduced\"."
+      },
+      {
+        "ruleId": "SKL-01",
+        "category": "skills",
+        "severity": "high",
+        "title": "Broad, recognizable skill set",
+        "detail": "25 skills recognized, across your experience and skills section."
+      },
+      {
+        "ruleId": "SKL-02",
+        "category": "skills",
+        "severity": "medium",
+        "title": "Range across areas",
+        "detail": "Your skills cover 7 areas, from languages to delivery practices."
+      },
+      {
+        "ruleId": "CLR-04",
+        "category": "clarity",
+        "severity": "low",
+        "title": "Concise summary",
+        "detail": "Your summary is 29 words: quick to read and to the point."
+      },
+      {
+        "ruleId": "EXP-01",
+        "category": "experience",
+        "severity": "high",
+        "title": "Dated work history",
+        "detail": "3 dated roles, about 10.8 years of experience in total."
+      },
+      {
+        "ruleId": "CMP-01",
+        "category": "completeness",
+        "severity": "medium",
+        "title": "Professional links included",
+        "detail": "A LinkedIn, GitHub or portfolio link lets reviewers see more of your work."
+      }
+    ],
+    "issues": [
+      {
+        "ruleId": "CLR-01",
+        "category": "clarity",
+        "severity": "medium",
+        "title": "Resume is very short",
+        "detail": "The resume has about 274 words. Reviewers may lack the context to judge your experience."
+      },
+      {
+        "ruleId": "IMP-03",
+        "category": "impact",
+        "severity": "low",
+        "title": "Passive phrasing",
+        "detail": "Found \"responsible for\", which describe duties rather than results."
+      }
+    ],
+    "recommendations": [
+      {
+        "ruleId": "JOB-01",
+        "priority": 1,
+        "title": "Mention the job’s skills you actually have",
+        "detail": "The posting asks for Data modeling, Kubernetes, Observability. If you have used them, name them in the roles where you did."
+      },
+      {
+        "ruleId": "CLR-01",
+        "priority": 2,
+        "title": "Add context to each role",
+        "detail": "Describe the product, your scope and two or three results for every recent position."
+      },
+      {
+        "ruleId": "IMP-03",
+        "priority": 3,
+        "title": "Replace duty phrases with outcomes",
+        "detail": "Turn \"Responsible for the API\" into \"Built the payments API used by 40 internal services\"."
+      }
+    ],
+    "jobMatch": {
+      "score": 76,
+      "matchedSkills": [
+        "End-to-end testing",
+        "Node.js",
+        "PostgreSQL",
+        "React",
+        "TypeScript",
+        "Accessibility",
+        "AWS",
+        "CI/CD",
+        "Docker",
+        "GraphQL",
+        "Next.js",
+        "Redis",
+        "REST APIs",
+        "Unit testing"
+      ],
+      "missingSkills": ["Data modeling", "Kubernetes", "Observability"],
+      "keywordCoverage": 0.6,
+      "missingKeywords": ["alerting", "dashboards", "design", "improve", "larkspur", "mentor"]
+    },
+    "stats": {
+      "wordCount": 274,
+      "bulletCount": 11,
+      "quantifiedBullets": 10,
+      "actionVerbBullets": 10
+    }
+  },
+  "jordan-okafor": {
+    "engineVersion": "2026.10.2",
+    "score": 68,
+    "grade": "fair",
+    "summary": "A solid base. Impact has the most room to improve, at 27 of 100.",
+    "categories": [
+      {
+        "id": "structure",
+        "label": "Structure",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "impact",
+        "label": "Impact",
+        "weight": 0.25,
+        "score": 27
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.15,
+        "score": 48
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "weight": 0.1,
+        "score": 100
+      },
+      {
+        "id": "completeness",
+        "label": "Completeness",
+        "weight": 0.1,
+        "score": 40
+      }
+    ],
+    "sections": [
+      {
+        "id": "summary",
+        "present": true
+      },
+      {
+        "id": "experience",
+        "present": true
+      },
+      {
+        "id": "education",
+        "present": true
+      },
+      {
+        "id": "skills",
+        "present": true
+      },
+      {
+        "id": "projects",
+        "present": false
+      },
+      {
+        "id": "certifications",
+        "present": false
+      }
+    ],
+    "skills": [
+      {
+        "id": "css",
+        "name": "CSS",
+        "category": "language",
+        "mentions": 2
+      },
+      {
+        "id": "html",
+        "name": "HTML",
+        "category": "language",
+        "mentions": 2
+      },
+      {
+        "id": "react",
+        "name": "React",
+        "category": "frontend",
+        "mentions": 2
+      },
+      {
+        "id": "typescript",
+        "name": "TypeScript",
+        "category": "language",
+        "mentions": 2
+      },
+      {
+        "id": "code-review",
+        "name": "Code review",
+        "category": "practice",
+        "mentions": 1
+      },
+      {
+        "id": "figma",
+        "name": "Figma",
+        "category": "design",
+        "mentions": 1
+      },
+      {
+        "id": "git",
+        "name": "Git",
+        "category": "practice",
+        "mentions": 1
+      },
+      {
+        "id": "javascript",
+        "name": "JavaScript",
+        "category": "language",
+        "mentions": 1
+      }
+    ],
+    "experience": {
+      "estimatedYears": 4,
+      "datedRoles": 2,
+      "earliestYear": 2021,
+      "hasCurrentRole": false
+    },
+    "strengths": [
+      {
+        "ruleId": "STR-01",
+        "category": "structure",
+        "severity": "high",
+        "title": "Clear experience section",
+        "detail": "Your work history sits under its own heading, where reviewers look first."
+      },
+      {
+        "ruleId": "SKL-01",
+        "category": "skills",
+        "severity": "high",
+        "title": "Broad, recognizable skill set",
+        "detail": "8 skills recognized, across your experience and skills section."
+      },
+      {
+        "ruleId": "SKL-02",
+        "category": "skills",
+        "severity": "medium",
+        "title": "Range across areas",
+        "detail": "Your skills cover 4 areas, from languages to delivery practices."
+      },
+      {
+        "ruleId": "CLR-04",
+        "category": "clarity",
+        "severity": "low",
+        "title": "Concise summary",
+        "detail": "Your summary is 54 words: quick to read and to the point."
+      },
+      {
+        "ruleId": "EXP-01",
+        "category": "experience",
+        "severity": "high",
+        "title": "Dated work history",
+        "detail": "2 dated roles, about 4 years of experience in total."
+      }
+    ],
+    "issues": [
+      {
+        "ruleId": "IMP-01",
+        "category": "impact",
+        "severity": "high",
+        "title": "Experience is written as paragraphs",
+        "detail": "No bullet points were found, so individual achievements are hard to scan."
+      },
+      {
+        "ruleId": "CLR-01",
+        "category": "clarity",
+        "severity": "medium",
+        "title": "Resume is very short",
+        "detail": "The resume has about 137 words. Reviewers may lack the context to judge your experience."
+      },
+      {
+        "ruleId": "IMP-03",
+        "category": "impact",
+        "severity": "low",
+        "title": "Passive phrasing",
+        "detail": "Found \"responsible for\", \"worked on\", \"helped with\", \"involved in\", \"participated in\", which describe duties rather than results."
+      },
+      {
+        "ruleId": "CLR-03",
+        "category": "clarity",
+        "severity": "low",
+        "title": "Written in the first person",
+        "detail": "Found 11 uses of \"I\", \"me\" or \"my\"."
+      }
+    ],
+    "recommendations": [
+      {
+        "ruleId": "JOB-01",
+        "priority": 1,
+        "title": "Mention the job’s skills you actually have",
+        "detail": "The posting asks for Accessibility, Design systems, Unit testing, Agile and more. If you have used them, name them in the roles where you did."
+      },
+      {
+        "ruleId": "IMP-01",
+        "priority": 1,
+        "title": "Rewrite roles as bullet points",
+        "detail": "Use three to six bullets per role, each describing one result."
+      },
+      {
+        "ruleId": "CLR-01",
+        "priority": 2,
+        "title": "Add context to each role",
+        "detail": "Describe the product, your scope and two or three results for every recent position."
+      },
+      {
+        "ruleId": "CMP-01",
+        "priority": 2,
+        "title": "Link to your work",
+        "detail": "Add a LinkedIn profile, GitHub account or portfolio URL in the header."
+      },
+      {
+        "ruleId": "IMP-03",
+        "priority": 3,
+        "title": "Replace duty phrases with outcomes",
+        "detail": "Turn \"Responsible for the API\" into \"Built the payments API used by 40 internal services\"."
+      },
+      {
+        "ruleId": "CLR-03",
+        "priority": 3,
+        "title": "Drop the pronouns",
+        "detail": "Resume bullets read more directly without \"I\" or \"my\": \"Led the migration\" instead of \"I led the migration\"."
+      },
+      {
+        "ruleId": "CMP-02",
+        "priority": 3,
+        "title": "Show work beyond your job titles",
+        "detail": "A short \"Projects\" section with one or two relevant projects adds evidence for the skills you list."
+      }
+    ],
+    "jobMatch": {
+      "score": 40,
+      "matchedSkills": ["React", "Code review", "CSS", "Figma", "Git", "HTML", "TypeScript"],
+      "missingSkills": [
+        "Accessibility",
+        "Design systems",
+        "Unit testing",
+        "Agile",
+        "Performance optimization",
+        "REST APIs",
+        "Tailwind CSS",
+        "TanStack Query",
+        "Testing Library"
+      ],
+      "keywordCoverage": 0.32,
+      "missingKeywords": [
+        "accessible",
+        "apis",
+        "brightpath",
+        "clinics",
+        "consuming",
+        "core",
+        "design",
+        "develop",
+        "fast",
+        "fundamentals"
+      ]
+    },
+    "stats": {
+      "wordCount": 137,
+      "bulletCount": 0,
+      "quantifiedBullets": 0,
+      "actionVerbBullets": 0
+    }
+  },
+  "mei-tanaka": {
+    "engineVersion": "2026.10.2",
+    "score": 94,
+    "grade": "excellent",
+    "summary": "An excellent resume. Clarity has the most room to improve, at 71 of 100.",
+    "categories": [
+      {
+        "id": "structure",
+        "label": "Structure",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "impact",
+        "label": "Impact",
+        "weight": 0.25,
+        "score": 100
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.15,
+        "score": 71
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "weight": 0.1,
+        "score": 100
+      },
+      {
+        "id": "completeness",
+        "label": "Completeness",
+        "weight": 0.1,
+        "score": 87
+      }
+    ],
+    "sections": [
+      {
+        "id": "summary",
+        "present": true
+      },
+      {
+        "id": "experience",
+        "present": true
+      },
+      {
+        "id": "education",
+        "present": true
+      },
+      {
+        "id": "skills",
+        "present": true
+      },
+      {
+        "id": "projects",
+        "present": false
+      },
+      {
+        "id": "certifications",
+        "present": false
+      }
+    ],
+    "skills": [
+      {
+        "id": "airflow",
+        "name": "Airflow",
+        "category": "data",
+        "mentions": 4
+      },
+      {
+        "id": "spark",
+        "name": "Apache Spark",
+        "category": "data",
+        "mentions": 2
+      },
+      {
+        "id": "docker",
+        "name": "Docker",
+        "category": "cloud",
+        "mentions": 2
+      },
+      {
+        "id": "kafka",
+        "name": "Kafka",
+        "category": "backend",
+        "mentions": 2
+      },
+      {
+        "id": "postgresql",
+        "name": "PostgreSQL",
+        "category": "data",
+        "mentions": 2
+      },
+      {
+        "id": "python",
+        "name": "Python",
+        "category": "language",
+        "mentions": 2
+      },
+      {
+        "id": "ci-cd",
+        "name": "CI/CD",
+        "category": "cloud",
+        "mentions": 1
+      },
+      {
+        "id": "git",
+        "name": "Git",
+        "category": "practice",
+        "mentions": 1
+      },
+      {
+        "id": "linux",
+        "name": "Linux",
+        "category": "cloud",
+        "mentions": 1
+      },
+      {
+        "id": "pandas",
+        "name": "pandas",
+        "category": "data",
+        "mentions": 1
+      },
+      {
+        "id": "sql",
+        "name": "SQL",
+        "category": "language",
+        "mentions": 1
+      }
+    ],
+    "experience": {
+      "estimatedYears": 6.8,
+      "datedRoles": 2,
+      "earliestYear": 2020,
+      "hasCurrentRole": true
+    },
+    "strengths": [
+      {
+        "ruleId": "STR-01",
+        "category": "structure",
+        "severity": "high",
+        "title": "Clear experience section",
+        "detail": "Your work history sits under its own heading, where reviewers look first."
+      },
+      {
+        "ruleId": "IMP-01",
+        "category": "impact",
+        "severity": "high",
+        "title": "Measurable achievements",
+        "detail": "6 of 7 bullets include a number, percentage or amount."
+      },
+      {
+        "ruleId": "IMP-02",
+        "category": "impact",
+        "severity": "medium",
+        "title": "Bullets lead with action verbs",
+        "detail": "6 of 7 bullets start with an action verb such as \"Built\", \"Led\" or \"Reduced\"."
+      },
+      {
+        "ruleId": "SKL-01",
+        "category": "skills",
+        "severity": "high",
+        "title": "Broad, recognizable skill set",
+        "detail": "11 skills recognized, across your experience and skills section."
+      },
+      {
+        "ruleId": "SKL-02",
+        "category": "skills",
+        "severity": "medium",
+        "title": "Range across areas",
+        "detail": "Your skills cover 5 areas, from languages to delivery practices."
+      },
+      {
+        "ruleId": "CLR-04",
+        "category": "clarity",
+        "severity": "low",
+        "title": "Concise summary",
+        "detail": "Your summary is 15 words: quick to read and to the point."
+      },
+      {
+        "ruleId": "EXP-01",
+        "category": "experience",
+        "severity": "high",
+        "title": "Dated work history",
+        "detail": "2 dated roles, about 6.8 years of experience in total."
+      },
+      {
+        "ruleId": "CMP-01",
+        "category": "completeness",
+        "severity": "medium",
+        "title": "Professional links included",
+        "detail": "A LinkedIn, GitHub or portfolio link lets reviewers see more of your work."
+      }
+    ],
+    "issues": [
+      {
+        "ruleId": "CLR-01",
+        "category": "clarity",
+        "severity": "medium",
+        "title": "Resume is very short",
+        "detail": "The resume has about 154 words. Reviewers may lack the context to judge your experience."
+      }
+    ],
+    "recommendations": [
+      {
+        "ruleId": "JOB-01",
+        "priority": 1,
+        "title": "Mention the job’s skills you actually have",
+        "detail": "The posting asks for Google Cloud, Terraform. If you have used them, name them in the roles where you did."
+      },
+      {
+        "ruleId": "CLR-01",
+        "priority": 2,
+        "title": "Add context to each role",
+        "detail": "Describe the product, your scope and two or three results for every recent position."
+      },
+      {
+        "ruleId": "CMP-02",
+        "priority": 3,
+        "title": "Show work beyond your job titles",
+        "detail": "A short \"Projects\" section with one or two relevant projects adds evidence for the skills you list."
+      }
+    ],
+    "jobMatch": {
+      "score": 70,
+      "matchedSkills": [
+        "Airflow",
+        "Apache Spark",
+        "Python",
+        "CI/CD",
+        "Docker",
+        "Git",
+        "Kafka",
+        "Linux",
+        "PostgreSQL",
+        "SQL"
+      ],
+      "missingSkills": ["Google Cloud", "Terraform"],
+      "keywordCoverage": 0.39,
+      "missingKeywords": [
+        "batch",
+        "cloud",
+        "comfortable",
+        "design",
+        "engineering",
+        "feed",
+        "google",
+        "maintain",
+        "model",
+        "monitor"
+      ]
+    },
+    "stats": {
+      "wordCount": 154,
+      "bulletCount": 7,
+      "quantifiedBullets": 6,
+      "actionVerbBullets": 6
+    }
+  },
+  "diego-marquez": {
+    "engineVersion": "2026.10.2",
+    "score": 86,
+    "grade": "excellent",
+    "summary": "An excellent resume. Completeness has the most room to improve, at 40 of 100.",
+    "categories": [
+      {
+        "id": "structure",
+        "label": "Structure",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "impact",
+        "label": "Impact",
+        "weight": 0.25,
+        "score": 95
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.15,
+        "score": 58
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "weight": 0.1,
+        "score": 100
+      },
+      {
+        "id": "completeness",
+        "label": "Completeness",
+        "weight": 0.1,
+        "score": 40
+      }
+    ],
+    "sections": [
+      {
+        "id": "summary",
+        "present": false
+      },
+      {
+        "id": "experience",
+        "present": true
+      },
+      {
+        "id": "education",
+        "present": true
+      },
+      {
+        "id": "skills",
+        "present": true
+      },
+      {
+        "id": "projects",
+        "present": false
+      },
+      {
+        "id": "certifications",
+        "present": false
+      }
+    ],
+    "skills": [
+      {
+        "id": "swift",
+        "name": "Swift",
+        "category": "language",
+        "mentions": 3
+      },
+      {
+        "id": "react-native",
+        "name": "React Native",
+        "category": "frontend",
+        "mentions": 2
+      },
+      {
+        "id": "ci-cd",
+        "name": "CI/CD",
+        "category": "cloud",
+        "mentions": 1
+      },
+      {
+        "id": "figma",
+        "name": "Figma",
+        "category": "design",
+        "mentions": 1
+      },
+      {
+        "id": "git",
+        "name": "Git",
+        "category": "practice",
+        "mentions": 1
+      },
+      {
+        "id": "graphql",
+        "name": "GraphQL",
+        "category": "backend",
+        "mentions": 1
+      },
+      {
+        "id": "kotlin",
+        "name": "Kotlin",
+        "category": "language",
+        "mentions": 1
+      },
+      {
+        "id": "rest",
+        "name": "REST APIs",
+        "category": "backend",
+        "mentions": 1
+      },
+      {
+        "id": "typescript",
+        "name": "TypeScript",
+        "category": "language",
+        "mentions": 1
+      },
+      {
+        "id": "unit-testing",
+        "name": "Unit testing",
+        "category": "testing",
+        "mentions": 1
+      }
+    ],
+    "experience": {
+      "estimatedYears": 9.5,
+      "datedRoles": 2,
+      "earliestYear": 2017,
+      "hasCurrentRole": true
+    },
+    "strengths": [
+      {
+        "ruleId": "STR-01",
+        "category": "structure",
+        "severity": "high",
+        "title": "Clear experience section",
+        "detail": "Your work history sits under its own heading, where reviewers look first."
+      },
+      {
+        "ruleId": "IMP-01",
+        "category": "impact",
+        "severity": "high",
+        "title": "Measurable achievements",
+        "detail": "5 of 6 bullets include a number, percentage or amount."
+      },
+      {
+        "ruleId": "IMP-02",
+        "category": "impact",
+        "severity": "medium",
+        "title": "Bullets lead with action verbs",
+        "detail": "5 of 6 bullets start with an action verb such as \"Built\", \"Led\" or \"Reduced\"."
+      },
+      {
+        "ruleId": "SKL-01",
+        "category": "skills",
+        "severity": "high",
+        "title": "Broad, recognizable skill set",
+        "detail": "10 skills recognized, across your experience and skills section."
+      },
+      {
+        "ruleId": "SKL-02",
+        "category": "skills",
+        "severity": "medium",
+        "title": "Range across areas",
+        "detail": "Your skills cover 7 areas, from languages to delivery practices."
+      },
+      {
+        "ruleId": "EXP-01",
+        "category": "experience",
+        "severity": "high",
+        "title": "Dated work history",
+        "detail": "2 dated roles, about 9.5 years of experience in total."
+      }
+    ],
+    "issues": [
+      {
+        "ruleId": "CLR-01",
+        "category": "clarity",
+        "severity": "medium",
+        "title": "Resume is very short",
+        "detail": "The resume has about 114 words. Reviewers may lack the context to judge your experience."
+      },
+      {
+        "ruleId": "IMP-03",
+        "category": "impact",
+        "severity": "low",
+        "title": "Passive phrasing",
+        "detail": "Found \"worked on\", which describe duties rather than results."
+      }
+    ],
+    "recommendations": [
+      {
+        "ruleId": "CLR-01",
+        "priority": 2,
+        "title": "Add context to each role",
+        "detail": "Describe the product, your scope and two or three results for every recent position."
+      },
+      {
+        "ruleId": "CMP-01",
+        "priority": 2,
+        "title": "Link to your work",
+        "detail": "Add a LinkedIn profile, GitHub account or portfolio URL in the header."
+      },
+      {
+        "ruleId": "IMP-03",
+        "priority": 3,
+        "title": "Replace duty phrases with outcomes",
+        "detail": "Turn \"Responsible for the API\" into \"Built the payments API used by 40 internal services\"."
+      },
+      {
+        "ruleId": "CLR-04",
+        "priority": 3,
+        "title": "Consider a two-line summary",
+        "detail": "A short summary with your role, years of experience and focus area frames everything below it."
+      },
+      {
+        "ruleId": "CMP-02",
+        "priority": 3,
+        "title": "Show work beyond your job titles",
+        "detail": "A short \"Projects\" section with one or two relevant projects adds evidence for the skills you list."
+      }
+    ],
+    "jobMatch": null,
+    "stats": {
+      "wordCount": 114,
+      "bulletCount": 6,
+      "quantifiedBullets": 5,
+      "actionVerbBullets": 5
+    }
+  },
+  "priya-raman": {
+    "engineVersion": "2026.10.2",
+    "score": 91,
+    "grade": "excellent",
+    "summary": "An excellent resume. Clarity has the most room to improve, at 68 of 100.",
+    "categories": [
+      {
+        "id": "structure",
+        "label": "Structure",
+        "weight": 0.2,
+        "score": 100
+      },
+      {
+        "id": "impact",
+        "label": "Impact",
+        "weight": 0.25,
+        "score": 100
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "weight": 0.2,
+        "score": 80
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.15,
+        "score": 68
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "weight": 0.1,
+        "score": 100
+      },
+      {
+        "id": "completeness",
+        "label": "Completeness",
+        "weight": 0.1,
+        "score": 100
+      }
+    ],
+    "sections": [
+      {
+        "id": "summary",
+        "present": true
+      },
+      {
+        "id": "experience",
+        "present": true
+      },
+      {
+        "id": "education",
+        "present": false
+      },
+      {
+        "id": "skills",
+        "present": true
+      },
+      {
+        "id": "projects",
+        "present": false
+      },
+      {
+        "id": "certifications",
+        "present": true
+      }
+    ],
+    "skills": [
+      {
+        "id": "kubernetes",
+        "name": "Kubernetes",
+        "category": "cloud",
+        "mentions": 5
+      },
+      {
+        "id": "linux",
+        "name": "Linux",
+        "category": "cloud",
+        "mentions": 4
+      },
+      {
+        "id": "observability",
+        "name": "Observability",
+        "category": "cloud",
+        "mentions": 4
+      },
+      {
+        "id": "aws",
+        "name": "AWS",
+        "category": "cloud",
+        "mentions": 3
+      },
+      {
+        "id": "terraform",
+        "name": "Terraform",
+        "category": "cloud",
+        "mentions": 3
+      },
+      {
+        "id": "ci-cd",
+        "name": "CI/CD",
+        "category": "cloud",
+        "mentions": 2
+      },
+      {
+        "id": "docker",
+        "name": "Docker",
+        "category": "cloud",
+        "mentions": 1
+      },
+      {
+        "id": "golang",
+        "name": "Go",
+        "category": "language",
+        "mentions": 1
+      },
+      {
+        "id": "python",
+        "name": "Python",
+        "category": "language",
+        "mentions": 1
+      }
+    ],
+    "experience": {
+      "estimatedYears": 11.4,
+      "datedRoles": 2,
+      "earliestYear": 2015,
+      "hasCurrentRole": true
+    },
+    "strengths": [
+      {
+        "ruleId": "STR-01",
+        "category": "structure",
+        "severity": "high",
+        "title": "Clear experience section",
+        "detail": "Your work history sits under its own heading, where reviewers look first."
+      },
+      {
+        "ruleId": "IMP-01",
+        "category": "impact",
+        "severity": "high",
+        "title": "Measurable achievements",
+        "detail": "6 of 7 bullets include a number, percentage or amount."
+      },
+      {
+        "ruleId": "IMP-02",
+        "category": "impact",
+        "severity": "medium",
+        "title": "Bullets lead with action verbs",
+        "detail": "6 of 7 bullets start with an action verb such as \"Built\", \"Led\" or \"Reduced\"."
+      },
+      {
+        "ruleId": "SKL-01",
+        "category": "skills",
+        "severity": "high",
+        "title": "Broad, recognizable skill set",
+        "detail": "9 skills recognized, across your experience and skills section."
+      },
+      {
+        "ruleId": "CLR-04",
+        "category": "clarity",
+        "severity": "low",
+        "title": "Concise summary",
+        "detail": "Your summary is 11 words: quick to read and to the point."
+      },
+      {
+        "ruleId": "EXP-01",
+        "category": "experience",
+        "severity": "high",
+        "title": "Dated work history",
+        "detail": "2 dated roles, about 11.4 years of experience in total."
+      },
+      {
+        "ruleId": "CMP-01",
+        "category": "completeness",
+        "severity": "medium",
+        "title": "Professional links included",
+        "detail": "A LinkedIn, GitHub or portfolio link lets reviewers see more of your work."
+      }
+    ],
+    "issues": [
+      {
+        "ruleId": "CLR-01",
+        "category": "clarity",
+        "severity": "medium",
+        "title": "Resume is very short",
+        "detail": "The resume has about 135 words. Reviewers may lack the context to judge your experience."
+      }
+    ],
+    "recommendations": [
+      {
+        "ruleId": "SKL-02",
+        "priority": 2,
+        "title": "Show the breadth of your work",
+        "detail": "Mention testing, delivery and collaboration practices alongside languages and frameworks."
+      },
+      {
+        "ruleId": "CLR-01",
+        "priority": 2,
+        "title": "Add context to each role",
+        "detail": "Describe the product, your scope and two or three results for every recent position."
+      }
+    ],
+    "jobMatch": null,
+    "stats": {
+      "wordCount": 135,
+      "bulletCount": 7,
+      "quantifiedBullets": 6,
+      "actionVerbBullets": 6
+    }
+  },
+  "sam-whitfield": {
+    "engineVersion": "2026.10.2",
+    "score": 36,
+    "grade": "needs-work",
+    "summary": "A resume with clear room to improve. Skills has the most room to improve, at 18 of 100.",
+    "categories": [
+      {
+        "id": "structure",
+        "label": "Structure",
+        "weight": 0.2,
+        "score": 50
+      },
+      {
+        "id": "impact",
+        "label": "Impact",
+        "weight": 0.25,
+        "score": 27
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "weight": 0.2,
+        "score": 18
+      },
+      {
+        "id": "clarity",
+        "label": "Clarity",
+        "weight": 0.15,
+        "score": 61
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "weight": 0.1,
+        "score": 20
+      },
+      {
+        "id": "completeness",
+        "label": "Completeness",
+        "weight": 0.1,
+        "score": 40
+      }
+    ],
+    "sections": [
+      {
+        "id": "summary",
+        "present": true
+      },
+      {
+        "id": "experience",
+        "present": true
+      },
+      {
+        "id": "education",
+        "present": true
+      },
+      {
+        "id": "skills",
+        "present": false
+      },
+      {
+        "id": "projects",
+        "present": false
+      },
+      {
+        "id": "certifications",
+        "present": false
+      }
+    ],
+    "skills": [
+      {
+        "id": "php",
+        "name": "PHP",
+        "category": "language",
+        "mentions": 1
+      }
+    ],
+    "experience": {
+      "estimatedYears": 0,
+      "datedRoles": 0,
+      "earliestYear": null,
+      "hasCurrentRole": false
+    },
+    "strengths": [
+      {
+        "ruleId": "STR-01",
+        "category": "structure",
+        "severity": "high",
+        "title": "Clear experience section",
+        "detail": "Your work history sits under its own heading, where reviewers look first."
+      },
+      {
+        "ruleId": "CLR-04",
+        "category": "clarity",
+        "severity": "low",
+        "title": "Concise summary",
+        "detail": "Your summary is 9 words: quick to read and to the point."
+      }
+    ],
+    "issues": [
+      {
+        "ruleId": "STR-04",
+        "category": "structure",
+        "severity": "high",
+        "title": "No email address",
+        "detail": "No email address was found in the document."
+      },
+      {
+        "ruleId": "IMP-01",
+        "category": "impact",
+        "severity": "high",
+        "title": "Experience is written as paragraphs",
+        "detail": "No bullet points were found, so individual achievements are hard to scan."
+      },
+      {
+        "ruleId": "SKL-01",
+        "category": "skills",
+        "severity": "high",
+        "title": "Few recognizable skills",
+        "detail": "Only 1 skill could be recognized."
+      },
+      {
+        "ruleId": "EXP-01",
+        "category": "experience",
+        "severity": "high",
+        "title": "No dates on your roles",
+        "detail": "No date ranges such as \"Mar 2021 – Present\" were found."
+      },
+      {
+        "ruleId": "STR-02",
+        "category": "structure",
+        "severity": "medium",
+        "title": "No skills section",
+        "detail": "Skills appear only inside your experience, which makes them easy to miss."
+      },
+      {
+        "ruleId": "CLR-01",
+        "category": "clarity",
+        "severity": "medium",
+        "title": "Resume is very short",
+        "detail": "The resume has about 54 words. Reviewers may lack the context to judge your experience."
+      },
+      {
+        "ruleId": "IMP-03",
+        "category": "impact",
+        "severity": "low",
+        "title": "Passive phrasing",
+        "detail": "Found \"responsible for\", \"worked on\", \"helped with\", \"duties included\", which describe duties rather than results."
+      }
+    ],
+    "recommendations": [
+      {
+        "ruleId": "JOB-01",
+        "priority": 1,
+        "title": "Mention the job’s skills you actually have",
+        "detail": "The posting asks for End-to-end testing, Node.js, PostgreSQL, React and more. If you have used them, name them in the roles where you did."
+      },
+      {
+        "ruleId": "STR-04",
+        "priority": 1,
+        "title": "Add an email address at the top",
+        "detail": "Reviewers need a way to reach you; put your email next to your name."
+      },
+      {
+        "ruleId": "IMP-01",
+        "priority": 1,
+        "title": "Rewrite roles as bullet points",
+        "detail": "Use three to six bullets per role, each describing one result."
+      },
+      {
+        "ruleId": "SKL-01",
+        "priority": 1,
+        "title": "Name your tools explicitly",
+        "detail": "Write the exact names of the languages, frameworks and platforms you used in each role."
+      },
+      {
+        "ruleId": "EXP-01",
+        "priority": 1,
+        "title": "Add start and end dates",
+        "detail": "Use a consistent \"Mon YYYY – Mon YYYY\" format for every role so your experience can be read at a glance."
+      },
+      {
+        "ruleId": "STR-02",
+        "priority": 2,
+        "title": "Add a short skills section",
+        "detail": "List the tools and technologies you use most, grouped by area, in six to twelve items."
+      },
+      {
+        "ruleId": "SKL-02",
+        "priority": 2,
+        "title": "Show the breadth of your work",
+        "detail": "Mention testing, delivery and collaboration practices alongside languages and frameworks."
+      },
+      {
+        "ruleId": "CLR-01",
+        "priority": 2,
+        "title": "Add context to each role",
+        "detail": "Describe the product, your scope and two or three results for every recent position."
+      },
+      {
+        "ruleId": "CMP-01",
+        "priority": 2,
+        "title": "Link to your work",
+        "detail": "Add a LinkedIn profile, GitHub account or portfolio URL in the header."
+      },
+      {
+        "ruleId": "IMP-03",
+        "priority": 3,
+        "title": "Replace duty phrases with outcomes",
+        "detail": "Turn \"Responsible for the API\" into \"Built the payments API used by 40 internal services\"."
+      },
+      {
+        "ruleId": "CMP-02",
+        "priority": 3,
+        "title": "Show work beyond your job titles",
+        "detail": "A short \"Projects\" section with one or two relevant projects adds evidence for the skills you list."
+      }
+    ],
+    "jobMatch": {
+      "score": 0,
+      "matchedSkills": [],
+      "missingSkills": [
+        "End-to-end testing",
+        "Node.js",
+        "PostgreSQL",
+        "React",
+        "TypeScript",
+        "Accessibility",
+        "AWS",
+        "CI/CD",
+        "Data modeling",
+        "Docker",
+        "GraphQL",
+        "Kubernetes",
+        "Next.js",
+        "Observability",
+        "Redis",
+        "REST APIs",
+        "Unit testing"
+      ],
+      "keywordCoverage": 0,
+      "missingKeywords": [
+        "apis",
+        "data",
+        "engineer",
+        "senior",
+        "alerting",
+        "automated",
+        "code",
+        "dashboard",
+        "dashboards",
+        "design"
+      ]
+    },
+    "stats": {
+      "wordCount": 54,
+      "bulletCount": 0,
+      "quantifiedBullets": 0,
+      "actionVerbBullets": 0
+    }
+  }
+}

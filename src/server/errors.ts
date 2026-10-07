@@ -55,14 +55,3 @@ export class RateLimitError extends AppError {
     );
   }
 }
-
-/** Raised by the extraction step; stored on the analysis rather than returned as HTTP. */
-export class ExtractionError extends Error {
-  constructor(
-    readonly code: 'unreadable_file' | 'no_text_found',
-    message: string,
-  ) {
-    super(message);
-    this.name = 'ExtractionError';
-  }
-}
