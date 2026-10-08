@@ -36,6 +36,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
+      // Browser extensions add attributes to <html> before React hydrates. This silences
+      // mismatches on this element's own attributes only, never on its children.
+      suppressHydrationWarning
       className={cn(monaSans.variable, martianMono.variable)}
     >
       <body className="min-h-dvh">
