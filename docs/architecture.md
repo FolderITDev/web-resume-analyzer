@@ -72,4 +72,6 @@ The visual system is documented in [DESIGN.md](../DESIGN.md). Server Components 
 
 ## Deployment
 
-The app is built with `basePath: '/apps/resume-analyzer'`. Set `SITE_ORIGIN` to the public origin at build time so canonical URLs, the sitemap and JSON-LD use the public origin. The root `robots.txt` of that origin should reference `/apps/resume-analyzer/sitemap.xml`. Set `ANALYSIS_ENGINE_URL` and, if the engine requires it, `ANALYSIS_ENGINE_API_KEY` at runtime. The in-process rate limiter and the `after()` job follower assume a single long-lived instance; serverless or multi-instance deployments should move them to a shared store and a job queue.
+The app is built with `basePath: '/apps/resume-analyzer'`. Set `SITE_ORIGIN` to the public origin at build time so canonical URLs, the sitemap and JSON-LD use the public origin. Set `ANALYSIS_ENGINE_URL` and, if the engine requires it, `ANALYSIS_ENGINE_API_KEY` at runtime. The in-process rate limiter and the `after()` job follower assume a single long-lived instance; serverless or multi-instance deployments should move them to a shared store and a job queue.
+
+Rate limits count requests per client address. Set `TRUSTED_PROXY_HOPS` to the number of reverse proxies in front of the app (default 1): the address is read that many entries from the right of `X-Forwarded-For`, so a client cannot choose its own key by sending the header.

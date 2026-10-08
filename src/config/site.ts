@@ -13,21 +13,25 @@ export const siteConfig = {
   company: {
     name: 'Folder IT',
     url: 'https://folderit.net',
-    logoUrl: 'https://www.folderit.net/docs/Header.webp',
+    /** The logo folderit.net publishes for its Organization, so both describe one entity. */
+    logoUrl: 'https://folderit.net/wp-content/uploads/2023/12/LOGO3-e1703096962202.jpg',
     description:
       'Folder IT is a nearshore software development company that builds custom web and mobile applications, business platforms and AI-ready engineering teams for U.S. companies.',
     sameAs: [
       'https://www.linkedin.com/company/folderit',
+      'https://www.instagram.com/folderit.social/',
       'https://x.com/folderit',
       'https://www.youtube.com/@folderit',
+      'https://www.tiktok.com/@folder_it',
+      'https://www.facebook.com/folderit.social',
       'https://github.com/FolderITDev',
     ],
   },
 } as const;
 
-/** Origin without a trailing slash, e.g. https://folderit.net. */
+/** Public origin without a trailing slash, from SITE_ORIGIN; the development server when unset. */
 export function siteOrigin(): string {
-  return (process.env.SITE_ORIGIN ?? 'https://folderit.net').replace(/\/+$/, '');
+  return (process.env.SITE_ORIGIN ?? 'http://localhost:3010').replace(/\/+$/, '');
 }
 
 /** Absolute URL for a path inside the app, e.g. absoluteUrl('/analyze'). */

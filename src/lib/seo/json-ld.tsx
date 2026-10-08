@@ -22,7 +22,8 @@ export function organizationJsonLd(): JsonLdObject {
     '@type': 'Organization',
     '@id': ORGANIZATION_ID,
     name: siteConfig.company.name,
-    url: siteConfig.company.url,
+    // Same @id, URL and logo as the Organization on folderit.net, so search engines merge them.
+    url: `${siteConfig.company.url}/`,
     logo: siteConfig.company.logoUrl,
     description: siteConfig.company.description,
     sameAs: siteConfig.company.sameAs,

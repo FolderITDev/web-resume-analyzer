@@ -246,7 +246,7 @@ The same checks run in GitHub Actions on every push and pull request ([`.github/
 - The landing page and the API reference are prerendered, with a unique `<h1>`, title, description, canonical URL, Open Graph and Twitter metadata, and a generated social image.
 - JSON-LD: `Organization` (Folder IT), `WebApplication` / `SoftwareApplication` with `creator` and `publisher`, `BreadcrumbList` and `FAQPage`.
 - `sitemap.xml` lists only indexable pages; the tool is `noindex, follow`; `/llms.txt` summarizes the application for AI assistants.
-- Set `SITE_ORIGIN` to the public origin for production builds, and reference `/apps/resume-analyzer/sitemap.xml` on that origin from the root `robots.txt`.
+- Set `SITE_ORIGIN` to the public origin for production builds.
 
 ## Privacy and limitations
 

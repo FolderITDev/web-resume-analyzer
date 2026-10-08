@@ -2,13 +2,17 @@ import { type MetadataRoute } from 'next';
 
 import { absoluteUrl, BASE_PATH } from '@/config/site';
 
-/**
- * Served at /apps/resume-analyzer/robots.txt for standalone deployments. Under folderit.net the
- * root robots.txt applies; it should list this app's sitemap (see the README).
- */
+/** Crawling rules for this app: its pages are open and its API stays out of the index. */
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: '*', allow: '/', disallow: [`${BASE_PATH}/api/`] }],
+    rules: [
+      {
+        userAgent: '*',
+        // The OpenAPI document is public reference material that llms.txt and the docs link to.
+        allow: ['/', `${BASE_PATH}/api/openapi.json`],
+        disallow: [`${BASE_PATH}/api/`],
+      },
+    ],
     sitemap: absoluteUrl('/sitemap.xml'),
   };
 }
