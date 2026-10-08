@@ -87,7 +87,7 @@ This repository holds one of its products: **Resume Analyzer**, a full-stack web
 
 <p align="center">
   <img src="docs/screenshots/01-landing.png" width="49%" alt="Landing page: headline 'Read your resume the way a reviewer does.', a score of 86 set as a type specimen with its weight axis, and six category sliders from an example report." />
-  <img src="docs/screenshots/03-report.png" width="49%" alt="Report for a senior engineer resume: score 98, six category sliders and the job description match with missing terms." />
+  <img src="docs/screenshots/03-report-score.png" width="49%" alt="Report for a senior engineer resume: score 98, six category sliders and the job description match with missing terms." />
 </p>
 <p align="center">
   <img src="docs/screenshots/02-upload.png" width="49%" alt="Upload page with an example PDF selected and a job description pasted for comparison." />
