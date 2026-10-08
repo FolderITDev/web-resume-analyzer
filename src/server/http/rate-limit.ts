@@ -26,7 +26,25 @@ export function createRateLimiter({ limit, windowMs }: { limit: number; windowMs
   };
 }
 
-export function clientKey(request: Request): string {
-  const forwarded = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-  return forwarded || request.headers.get('x-real-ip') || 'local';
+/** Reverse proxies in front of the app that append to X-Forwarded-For (TRUSTED_PROXY_HOPS). */
+function trustedProxyHops(): number {
+  const hops = Number(process.env.TRUSTED_PROXY_HOPS ?? 1);
+  return Number.isInteger(hops) && hops >= 0 ? hops : 1;
+}
+
+/**
+ * The client address that requests are counted against. Each trusted proxy appends the address
+ * it received the request from to X-Forwarded-For, so the client is read that many entries from
+ * the right; entries further left were sent by the client and could be anything. With no
+ * trusted proxy, forwarding headers are ignored and every request shares one budget.
+ */
+export function clientKey(request: Request, hops = trustedProxyHops()): string {
+  if (hops === 0) return 'direct';
+  const chain = (request.headers.get('x-forwarded-for') ?? '')
+    .split(',')
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  return (
+    chain[Math.max(0, chain.length - hops)] ?? request.headers.get('x-real-ip')?.trim() ?? 'direct'
+  );
 }

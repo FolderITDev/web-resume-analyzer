@@ -142,6 +142,38 @@ describe('analysis pipeline', () => {
     });
   });
 
+  it('retries a status read that fails once and still completes the analysis', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const reads: Array<() => EngineJob> = [
+      () => {
+        throw new AnalysisEngineError('The analysis engine answered 502.');
+      },
+      () => ({ id: 'job-1', status: 'completed', stage: 'done', report }),
+    ];
+    const { updates, run } = harness({
+      submit: async () => running('received', 'queued'),
+      get: async () => reads.shift()!(),
+    });
+
+    await run();
+
+    expect(updates.at(-1)).toMatchObject({ status: 'completed', score: report.score });
+  });
+
+  it('gives up after several status reads fail in a row', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    const get = vi.fn(async (): Promise<EngineJob> => {
+      throw new AnalysisEngineError('The analysis engine could not be reached.');
+    });
+    const { updates, run } = harness({ submit: async () => running('received', 'queued'), get });
+
+    await run();
+
+    expect(get).toHaveBeenCalledTimes(3);
+    expect(updates.at(-1)).toMatchObject({ status: 'failed', errorCode: 'engine_unavailable' });
+  });
+
   it('fails the analysis with a clear message when the engine is unavailable', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
     const { updates, run } = harness({

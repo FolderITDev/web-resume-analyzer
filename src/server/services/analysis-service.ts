@@ -36,6 +36,8 @@ const ENGINE_DEADLINE_MS = 2 * 60 * 1000;
 /** Delays before the first status reads; after these, the job is read once a second. */
 const FIRST_POLL_DELAYS_MS = [250, 500, 750] as const;
 const POLL_INTERVAL_MS = 1000;
+/** Status reads in a row that may fail (a timeout, a 502) before the engine counts as unavailable. */
+const MAX_CONSECUTIVE_READ_FAILURES = 3;
 const FILE_NAME_MAX = 160;
 
 export type UploadedFile = { name: string; bytes: Uint8Array };
@@ -126,16 +128,31 @@ export function createAnalysisService({
   now = () => new Date(),
   wait = defaultWait,
 }: Dependencies) {
-  /** Reads the job until it settles, recording every stage the engine reports on the way. */
+  /**
+   * Reads the job until it settles, recording every stage the engine reports on the way. A read
+   * that fails is retried on the next poll; only several failures in a row, or the deadline,
+   * end the analysis.
+   */
   async function follow(id: string, submitted: EngineJob): Promise<SettledEngineJob> {
     const deadline = now().getTime() + ENGINE_DEADLINE_MS;
     let job = submitted;
+    let failedReads = 0;
     for (let attempt = 0; isRunning(job); attempt++) {
       if (now().getTime() > deadline) {
         throw new AnalysisEngineError(`Job ${job.id} did not finish within the deadline.`);
       }
       await wait(pollDelay(attempt));
-      const next = await engine.get(job.id);
+      let next: EngineJob;
+      try {
+        next = await engine.get(job.id);
+        failedReads = 0;
+      } catch (error) {
+        failedReads += 1;
+        if (!(error instanceof AnalysisEngineError) || failedReads >= MAX_CONSECUTIVE_READ_FAILURES)
+          throw error;
+        console.warn('Analysis engine status read failed; retrying', { id, failedReads, error });
+        continue;
+      }
       if (isRunning(next) && next.stage !== job.stage) {
         await repository.update(id, { stage: next.stage });
       }

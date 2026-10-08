@@ -2,7 +2,8 @@ import { after } from 'next/server';
 
 import { BASE_PATH } from '@/config/site';
 import { MAX_UPLOAD_BYTES, SubmittedAnalysisSchema } from '@/lib/validation/analysis';
-import { PayloadTooLargeError, ValidationError } from '@/server/errors';
+import { ValidationError } from '@/server/errors';
+import { readBodyBytes } from '@/server/http/body';
 import { clientKey, createRateLimiter } from '@/server/http/rate-limit';
 import { handle, json } from '@/server/http/responses';
 import { ensureSession } from '@/server/http/session';
@@ -17,14 +18,17 @@ const text = (value: FormDataEntryValue | null) => (typeof value === 'string' ? 
 export const POST = handle(async (request) => {
   uploads.consume(clientKey(request));
 
-  const declaredLength = Number(request.headers.get('content-length') ?? 0);
-  if (declaredLength > MAX_UPLOAD_BYTES + MULTIPART_OVERHEAD) {
-    throw new PayloadTooLargeError('The file is larger than 5 MB. Export a smaller PDF or DOCX.');
-  }
+  const body = await readBodyBytes(
+    request,
+    MAX_UPLOAD_BYTES + MULTIPART_OVERHEAD,
+    'The file is larger than 5 MB. Export a smaller PDF or DOCX.',
+  );
 
   let form: FormData;
   try {
-    form = await request.formData();
+    form = await new Response(body.slice(), {
+      headers: { 'Content-Type': request.headers.get('content-type') ?? '' },
+    }).formData();
   } catch {
     throw new ValidationError('Send the resume as multipart/form-data with a "file" field.');
   }
